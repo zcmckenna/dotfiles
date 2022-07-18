@@ -1,31 +1,19 @@
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
+set tabstop=2
+set shiftwidth=2
+set expandtab
+set encoding=utf-8
+
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
-" alternatively, pass a path where Vundle should install plugins
-"call vundle#begin('~/some/path/here')
 
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
 
-" The following are examples of different formats supported.
-" Keep Plugin commands between vundle#begin/end.
-" plugin on GitHub repo
 Plugin 'tpope/vim-fugitive'
-" plugin from http://vim-scripts.org/vim/scripts.html
-" Plugin 'L9'
-" Git plugin not hosted on GitHub
-Plugin 'git://git.wincent.com/command-t.git'
-" git repos on your local machine (i.e. when working on your own plugin)
-"Plugin 'file:///home/gmarik/path/to/plugin'
-" The sparkup vim script is in a subdirectory of this repo called vim.
-" Pass the path to set the runtimepath properly.
-Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
-" Install L9 and avoid a Naming conflict if you've already installed a
-" different version somewhere else.
-" Plugin 'ascenator/L9', {'name': 'newL9'}
 Plugin 'altercation/vim-colors-solarized'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
@@ -33,6 +21,11 @@ Plugin 'preservim/nerdtree'
 Plugin 'ryanoasis/vim-devicons'
 Plugin 'drewtempelmeyer/palenight.vim'
 Plugin 'hdima/python-syntax'
+Plugin 'tiagofumo/vim-nerdtree-syntax-highlight'
+Plugin 'haishanh/night-owl.vim'
+Plugin 'rakr/vim-one'
+Plugin 'michaeldyrynda/carbon'
+
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -60,7 +53,11 @@ set number
 set background=dark
 colorscheme palenight
 
- let python_highlight_all = 1
+if (has("termguicolors"))
+  set termguicolors
+endif
+
+let python_highlight_all = 1
 
 let g:airline_theme='palenight'
 let g:airline_solarized_bg='dark'
