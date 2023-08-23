@@ -9,23 +9,33 @@ set encoding=utf-8
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
+" alternatively, pass a path where Vundle should install plugins
+"call vundle#begin('~/some/path/here')
 
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
 
-Plugin 'tpope/vim-fugitive'
-Plugin 'altercation/vim-colors-solarized'
+" The following are examples of different formats supported.
+" Keep Plugin commands between vundle#begin/end.
+
+Plugin 'preservim/nerdtree'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
-Plugin 'preservim/nerdtree'
-Plugin 'ryanoasis/vim-devicons'
 Plugin 'drewtempelmeyer/palenight.vim'
-Plugin 'hdima/python-syntax'
+Plugin 'ryanoasis/vim-devicons'
+Plugin 'tpope/vim-fugitive'
+Plugin 'godlygeek/tabular'
 Plugin 'tiagofumo/vim-nerdtree-syntax-highlight'
 Plugin 'haishanh/night-owl.vim'
 Plugin 'rakr/vim-one'
 Plugin 'michaeldyrynda/carbon'
-
+" The sparkup vim script is in a subdirectory of this repo called vim.
+" Pass the path to set the runtimepath properly.
+"Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
+" Install L9 and avoid a Naming conflict if you've already installed a
+" different version somewhere else.
+" Plugin 'ascenator/L9', {'name': 'newL9'}
+"Plugin 'git://github.com:preservim/nerdtree.git'
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -41,8 +51,8 @@ filetype plugin indent on    " required
 " see :h vundle for more details or wiki for FAQ
 " Put your non-Plugin stuff after this line
 syntax enable
-
 nnoremap <C-n> :NERDTree<CR>
+" nnoremap K :/ '\b<C-R><C-W>\b'<CR>:cw<CR>
 
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists('s:std_in') | NERDTree | endif
@@ -51,23 +61,22 @@ autocmd VimEnter * NERDTree | wincmd p
 
 set number
 set background=dark
+"colorscheme palenight
+" colorscheme night-owl
 colorscheme palenight
-
+"colorscheme one
 if (has("termguicolors"))
   set termguicolors
 endif
 
-let python_highlight_all = 1
-
-let g:airline_theme='palenight'
-let g:airline_solarized_bg='dark'
-
 let g:airline_powerline_fonts = 1
 if !exists('g:airline_symbols')
-    let g:airline_symbols = {}
+  let g:airline_symbols = {}
 endif
 
-" unicode symbols
+let g:airline_theme = 'palenight' 
+" let g:airline_theme = 'night-owl'
+" let g:airline_theme = 'carbon'
 let g:airline_left_sep = '»'
 let g:airline_left_sep = '▶'
 let g:airline_right_sep = '«'
@@ -81,7 +90,6 @@ let g:airline_symbols.paste = 'Þ'
 let g:airline_symbols.paste = '∥'
 let g:airline_symbols.whitespace = 'Ξ'
 
-" airline symbols
 let g:airline_left_sep = ''
 let g:airline_left_alt_sep = ''
 let g:airline_right_sep = ''
@@ -89,3 +97,42 @@ let g:airline_right_alt_sep = ''
 let g:airline_symbols.branch = ''
 let g:airline_symbols.readonly = ''
 let g:airline_symbols.linenr = ' '
+
+command Findmods /^\s*\w\+\_s\+\(\(\w\+\_s*(\)\|\(\#\_s*(\(\_s*\.\w\+\_s*(\w\+),\=\)\+\_s*)\_s*\w\+\)\)
+
+if has("unix")
+  function! FontSizePlus ()
+    let l:gf_size_whole = matchstr(&guifont, '\( \)\@<=\d\+$')
+    let l:gf_size_whole = l:gf_size_whole + 1
+    let l:new_font_size = ' '.l:gf_size_whole
+    let &guifont = substitute(&guifont, ' \d\+$', l:new_font_size, '')
+  endfunction
+
+  function! FontSizeMinus ()
+    let l:gf_size_whole = matchstr(&guifont, '\( \)\@<=\d\+$')
+    let l:gf_size_whole = l:gf_size_whole - 1
+    let l:new_font_size = ' '.l:gf_size_whole
+    let &guifont = substitute(&guifont, ' \d\+$', l:new_font_size, '')
+  endfunction
+else
+  function! FontSizePlus ()
+    let l:gf_size_whole = matchstr(&guifont, '\(:h\)\@<=\d\+$')
+    let l:gf_size_whole = l:gf_size_whole + 1
+    let l:new_font_size = ':h'.l:gf_size_whole
+    let &guifont = substitute(&guifont, ':h\d\+$', l:new_font_size, '')
+  endfunction
+
+  function! FontSizeMinus ()
+    let l:gf_size_whole = matchstr(&guifont, '\(:h\)\@<=\d\+$')
+    let l:gf_size_whole = l:gf_size_whole - 1
+    let l:new_font_size = ':h'.l:gf_size_whole
+    let &guifont = substitute(&guifont, ':h\d\+$', l:new_font_size, '')
+  endfunction
+endif
+
+nmap <S-F12> :call FontSizeMinus()<CR>
+nmap <F12> :call FontSizePlus()<CR>
+try
+  source ~/.vim/binds.vim
+catch
+endtry
