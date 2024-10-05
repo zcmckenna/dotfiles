@@ -9,6 +9,6 @@ if has("win32")
  let $TMP="/tmp"
 endif
 try
-  source ~/.vim/vimrc
+  source $HOME/.vim/vimrc
 catch
 endtry
