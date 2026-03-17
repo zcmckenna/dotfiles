@@ -7,6 +7,8 @@ set expandtab
 set encoding=utf-8
 set mouse=
 
+set rtp+=~/.fzf
+
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
@@ -26,6 +28,8 @@ Plugin 'drewtempelmeyer/palenight.vim'
 Plugin 'ryanoasis/vim-devicons'
 Plugin 'tpope/vim-fugitive'
 Plugin 'godlygeek/tabular'
+Plugin 'file://~/.vim/bundle/fzf'
+Plugin 'junegunn/fzf.vim'
 
 Plugin 'tiagofumo/vim-nerdtree-syntax-highlight'
 Plugin 'haishanh/night-owl.vim'
@@ -33,7 +37,8 @@ Plugin 'rakr/vim-one'
 Plugin 'michaeldyrynda/carbon'
 Plugin 'junegunn/vim-peekaboo'
 Plugin 'junegunn/gv.vim'
-Plugin 'github/copilot.vim'
+Plugin 'gcmt/taboo.vim'
+"Plugin 'Exafunction/windsurf.vim'
 " The sparkup vim script is in a subdirectory of this repo called vim.
 " Pass the path to set the runtimepath properly.
 "Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
@@ -104,11 +109,6 @@ let g:airline_symbols.branch = ''
 let g:airline_symbols.readonly = ''
 let g:airline_symbols.linenr = ' '
 
-command Findmods /^\s*\w\+\_s\+\(\(\w\+\_s*(\)\|\(\#\_s*(\(\_s*\.\w\+\_s*(\w\+),\=\)\+\_s*)\_s*\w\+\)\)
-
-let g:copilot_proxy_strict_ssl = v:false
-let g:copilot_proxy = 'webproxy.ext.ti.com:80'
-
 if has("unix")
   function! FontSizePlus ()
     let l:gf_size_whole = matchstr(&guifont, '\( \)\@<=\d\+$')
@@ -139,8 +139,6 @@ else
   endfunction
 endif
 
-nmap <S-F12> :call FontSizeMinus()<CR>
-nmap <F12> :call FontSizePlus()<CR>
 try
   source ~/.vim/binds.vim
 catch
